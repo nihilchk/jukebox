@@ -25,7 +25,7 @@ class SongRequestsController < ApplicationController
 
     respond_to do |format|
       if @song_request.save
-        format.html { redirect_to action: :index, notice: 'Song request was successfully created.' }
+        format.html { redirect_to action: :index }
         format.json { render :show, status: :created, location: @song_request }
       else
         format.html { render :new }
