@@ -5,7 +5,9 @@ class SongRequest < ActiveRecord::Base
   before_create :set_fields
   after_create :download_file
   default_scope { order ('id DESC') }
+  
   def set_fields
+    self.file_id = self.song_url.split('v=').last.split('&').first
     description_text = %x{youtube-dl --get-title --get-description #{self.song_url}}
     if description_text.length > 255
       self.description = description_text[1..240] + "..."
@@ -13,10 +15,6 @@ class SongRequest < ActiveRecord::Base
       self.description = description_text
     end
     self.status = 'New'
-  end
-
-  def file_id
-    song_url.split('v=').last.split('&').first
   end
 
   def download_file

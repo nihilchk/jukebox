@@ -1,13 +1,10 @@
 class SongRequestsController < ApplicationController
   before_action :set_song_request, only: [:retry]
 
-  # GET /song_requests
-  # GET /song_requests.json
   def index
     @song_requests = SongRequest.all
   end
 
-  # GET /song_requests/new
   def new
     @song_request = SongRequest.new
   end
@@ -18,8 +15,6 @@ class SongRequestsController < ApplicationController
     render 'index'
   end
 
-  # POST /song_requests
-  # POST /song_requests.json
   def create
     @song_request = SongRequest.new(song_request_params)
 
@@ -35,13 +30,11 @@ class SongRequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_song_request
       @song_request = SongRequest.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def song_request_params
-      params.require(:song_request).permit(:dedicated_to, :song_url, :message, :requestor, :file_id)
+      params.require(:song_request).permit(:dedicated_to, :song_url, :message, :requestor)
     end
 end
