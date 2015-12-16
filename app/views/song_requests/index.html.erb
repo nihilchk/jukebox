@@ -10,7 +10,7 @@
       <th>Message</th>
       <th>Requestor</th>
       <th>State</th>
-      <th colspan="2"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -18,12 +18,11 @@
     <% @song_requests.each do |song_request| %>
       <tr align="center">
         <td><%= song_request.dedicated_to %></td>
-        <td><%= song_request.file_id %></td>
+        <td><%= song_request.file_id %> - <%= song_request.description ? song_request.description.gsub("\n","<br>").html_safe : "" %></td>
         <td><%= song_request.message %></td>
         <td><%= song_request.requestor %></td>
         <!--td><%= song_request.file_id %></td-->
         <td><%= song_request.status %></td>
-        <td><%= link_to 'Show', song_request %></td>
         <td>
         <% if song_request.status == "Error" %>
           <%= link_to 'Retry', retry_song_request_path(song_request), method: :put%>

@@ -1,15 +1,10 @@
 class SongRequestsController < ApplicationController
-  before_action :set_song_request, only: [:show, :retry]
+  before_action :set_song_request, only: [:retry]
 
   # GET /song_requests
   # GET /song_requests.json
   def index
     @song_requests = SongRequest.all
-  end
-
-  # GET /song_requests/1
-  # GET /song_requests/1.json
-  def show
   end
 
   # GET /song_requests/new
@@ -30,7 +25,7 @@ class SongRequestsController < ApplicationController
 
     respond_to do |format|
       if @song_request.save
-        format.html { redirect_to :index, notice: 'Song request was successfully created.' }
+        format.html { redirect_to action: :index, notice: 'Song request was successfully created.' }
         format.json { render :show, status: :created, location: @song_request }
       else
         format.html { render :new }
