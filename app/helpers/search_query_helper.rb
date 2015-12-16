@@ -1,0 +1,3 @@
+
+module SearchQueryHelper
+end
