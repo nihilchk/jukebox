@@ -21,6 +21,6 @@ class PlaySongPlayer < PlaySong
 
   def self.get_song_detail song_id
     object = JSON.parse(Net::HTTP.get(URI.parse("http://jukebox.local:3000/song_requests/#{song_id}.json")))
-    SongRequest.new(object)
+    OpenStruct.new(object)
   end
 end
