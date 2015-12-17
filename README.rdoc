@@ -1,28 +1,36 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A basic jukebox application which uses resque for distributing songs across places. We required one in our office setup that's why this repository came into existence.
+Its really simple to setup. All you need is redis server and few dependencies like youtube-dl, ffmpeg, afplay/mpg123 based on whether you are using mac/ubuntu and you are all set.
 
-Things you may want to cover:
-
-* Ruby version
+* Ruby version > 2.2
 
 * System dependencies
+  - youtube-dl
+  - ffmpeg
+  - afplay/mpg123
+  - redis
+  - samba(for sharing downloaded files in case you want to run multiple remote players)
 
 * Configuration
+  - edit the server-config.yml as per your setup (mostly the production section)
+  - add a secret key for admins on <servername> server as JUKEBOX_ADMIN_SECRET=mysupersecurepassword
+  - servernames can be ip addresses also, servername must have a accessible redis server running on port 6379
 
 * Database creation
+  - RAILS_ENV=production rake db:create db:migrate
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+* Services
+  - for playback on master you need to run resque worker QUEUE=jukebox.local RAILS_ENV=production bundle exec rake environment resque:work
+  - for playback on players you need to run a similar command just the QUEUE=jukebox-player.local
+  - you can configure multiple players by using different ip addresses/domain names in the said fashion
 
 * Deployment instructions
+  - Checkout jukebox on all master/player boxes
+  - Create a songs folder in the jukebox directory and share that over network. 
+  - Mount the same on to every player at the same path
 
-* ...
+Disclaimer: This software uses youtube.com extensively, please be cognizant while you use, you will be responsible if google decides to block you for too many requests!
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+This has been coded between lots of noise and during easter time. In case you find issues, contact the owner directly.
+Test suite isn't present.
