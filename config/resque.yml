@@ -1,2 +1,2 @@
 development: localhost:6379
-prod: jukebox.local:6379
+production: jukebox.local:6379
