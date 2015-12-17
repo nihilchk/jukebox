@@ -23,7 +23,8 @@ Its really simple to setup. All you need is redis server and few dependencies li
 * Services
   - for playback on master you need to run resque worker QUEUE=jukebox.local RAILS_ENV=production bundle exec rake environment resque:work
   - for playback on players you need to run a similar command just the QUEUE=jukebox-player.local
-  - you can configure multiple players by using different ip addresses/domain names in the said fashion
+  - you can configure multiple players by using different ip addresses/domain names in the said fashion, a queue will be created for each of them.
+  - the rails application needs to start on 3000 port and it should be accessible to the players. Use RAILS_ENV=production rails s -b0.0.0.0
 
 * Deployment instructions
   - Checkout jukebox on all master/player boxes
