@@ -8,9 +8,13 @@ class PlaySong
   def self.perform(song_id)
     song = get_song_detail song_id
 		%x{say "This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. Enjoy!"}
-  	song.status = "Playing"
+    actually_play_song song
+  end
+
+  def self.actually_play_song song
+    song.status = "Playing"
     song.save!
-    %x{#{player_command} songs/#{song.file_id}.mp3} 
+    %x{#{player_command} songs/#{song.file_id}.mp3}
     song.status = "Played"
     song.save!
   end
@@ -26,5 +30,9 @@ class PlaySongPlayer < PlaySong
     url = "http://#{Jukebox::Application.config.master_server_config['servername']}:3000/song_requests/#{song_id}.json"
     object = JSON.parse(Net::HTTP.get(URI.parse(url)))
     OpenStruct.new(object)
+  end
+
+  def self.actually_play_song song
+    %x{#{player_command} songs/#{song.file_id}.mp3}
   end
 end
