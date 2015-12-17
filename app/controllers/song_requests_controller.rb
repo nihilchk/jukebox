@@ -30,8 +30,8 @@ class SongRequestsController < ApplicationController
   end
 
   def enqueue
-    Resque.enqueue(PlaySong, @song_request.id, :jukebox)
-    Resque.enqueue(PlaySong, @song_request.id, :jukebox_player)
+    Resque.enqueue(PlaySong, @song_request.id)
+    Resque.enqueue(PlaySongPlayer, @song_request.id)
     render json: {status: @song_request.status, id: @song_request.id}
   end
 
