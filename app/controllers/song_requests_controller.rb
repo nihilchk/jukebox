@@ -14,8 +14,7 @@ class SongRequestsController < ApplicationController
 
   def retry
     @song_request.download_file
-    @song_requests = SongRequest.all
-    render 'index'
+    redirect_to action: :index
   end
 
   def create
@@ -33,8 +32,11 @@ class SongRequestsController < ApplicationController
   end
 
   def enqueue
+    render json: {error: "wrong secret"} and return if params[:admin_secret] != Jukebox::Application.config.admin_secret
     Resque.enqueue(PlaySong, @song_request.id)
-    Resque.enqueue(PlaySongPlayer, @song_request.id)
+    Jukebox::Application.config.master_server_config['other_players'].each do | player_name |
+      Resque.enqueue_to(player_name, PlaySongPlayer, @song_request.id)
+    end if Jukebox::Application.config.master_server_config['other_players'].present?
     render json: {status: @song_request.status, id: @song_request.id}
   end
 

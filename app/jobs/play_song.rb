@@ -1,5 +1,5 @@
 class PlaySong
-  @queue = 'jukebox'
+  @queue = Jukebox::Application.config.master_server_config['servername']
 
   def self.get_song_detail song_id
     SongRequest.find(song_id)
@@ -17,10 +17,9 @@ class PlaySong
 end
 
 class PlaySongPlayer < PlaySong
-  @queue = 'jukebox_player'
-
   def self.get_song_detail song_id
-    object = JSON.parse(Net::HTTP.get(URI.parse("http://jukebox.local:3000/song_requests/#{song_id}.json")))
+    url = "http://#{Jukebox::Application.config.master_server_config['servername']}:3000/song_requests/#{song_id}.json"
+    object = JSON.parse(Net::HTTP.get(URI.parse(url)))
     OpenStruct.new(object)
   end
 end

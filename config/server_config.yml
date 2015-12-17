@@ -1,0 +1,6 @@
+development: 
+  servername: localhost
+production: 
+  servername: jukebox.local
+  other_players:
+    - jukebox-player.local
