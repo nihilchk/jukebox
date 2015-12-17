@@ -1,5 +1,5 @@
 class SongRequestsController < ApplicationController
-  before_action :set_song_request, only: [:retry, :enqueue]
+  before_action :set_song_request, only: [:retry, :enqueue, :show]
 
   def index
     @song_requests = SongRequest.all
@@ -7,6 +7,9 @@ class SongRequestsController < ApplicationController
 
   def new
     @song_request = SongRequest.new
+  end
+
+  def show
   end
 
   def retry

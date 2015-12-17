@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :song_requests, :only => [:index, :create, :new] do
+  resources :song_requests, :only => [:index, :create, :new, :show] do
     member do
       put 'retry'
       get 'enqueue'
