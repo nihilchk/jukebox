@@ -23,7 +23,7 @@
         <td><%= song_request.description ? song_request.description.gsub("\n","<br>").html_safe : "" %></td>
         <td><%= song_request.message %></td>
         <td><%= song_request.requestor %></td>
-        <!--td><%= song_request.file_id %></td-->
+        <!--td><%= song_request.id %></td-->
         <td><%= song_request.status %><% if song_request.status == "Error" %>
           <br/><%= link_to 'Retry', retry_song_request_path(song_request), method: :put%>
         <%end%></td>
