@@ -1,5 +1,5 @@
 class SongRequestsController < ApplicationController
-  before_action :set_song_request, only: [:retry]
+  before_action :set_song_request, only: [:retry, :enqueue]
 
   def index
     @song_requests = SongRequest.all
@@ -27,6 +27,12 @@ class SongRequestsController < ApplicationController
         format.json { render json: @song_request.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def enqueue
+    Resque.enqueue(PlaySong, @song_request.id, :jukebox)
+    Resque.enqueue(PlaySong, @song_request.id, :jukebox_player)
+    render json: {status: @song_request.status, id: @song_request.id}
   end
 
   private
