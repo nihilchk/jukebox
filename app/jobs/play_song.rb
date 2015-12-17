@@ -10,9 +10,14 @@ class PlaySong
 		%x{say "This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. Enjoy!"}
   	song.status = "Playing"
     song.save!
-    %x{afplay songs/#{song.file_id}.mp3} 
+    %x{#{player_command} songs/#{song.file_id}.mp3} 
     song.status = "Played"
     song.save!
+  end
+
+  def self.player_command
+    is_darwin = (/darwin/ =~ RUBY_PLATFORM) != nil
+    is_darwin ? "afplay" : "mpg123"
   end
 end
 
