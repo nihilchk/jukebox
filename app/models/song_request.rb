@@ -7,7 +7,7 @@ class SongRequest < ActiveRecord::Base
   default_scope { order ('id DESC') }
   
   def set_fields
-    self.file_id = self.song_url.gsub(/http(s)?:\/\/www[.]youtube[.]com\//,"").gsub("/","_").gsub("?v=","").split("&").first
+    self.file_id = self.song_url.gsub(/http(s)?:\/\/www[.]youtube[.]com\//,"").gsub("/","_").gsub("watch?v=","").split("&").first
     description_text = %x{youtube-dl --get-title --get-description #{self.song_url}}
     if description_text.length > 255
       self.description = description_text[0..240] + "..."
