@@ -33,6 +33,8 @@ class SongRequestsController < ApplicationController
 
   def enqueue
     render json: {error: "wrong secret"} and return if params[:admin_secret] != Jukebox::Application.config.admin_secret
+    @song_request.status = 'Will be played'
+    @song_request.save!
     Resque.enqueue(PlaySong, @song_request.id)
     Jukebox::Application.config.master_server_config['other_players'].each do | player_name |
       Resque.enqueue_to(player_name, PlaySongPlayer, @song_request.id)
