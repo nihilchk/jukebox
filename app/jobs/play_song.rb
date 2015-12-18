@@ -1,5 +1,6 @@
 class PlaySong
   @queue = Jukebox::Application.config.master_server_config['servername']
+  RANDOM_ACCENTS = ['Veena', 'Vicki', 'Alex', 'Ting-Ting']
 
   def self.get_song_detail song_id
     SongRequest.find(song_id)
@@ -7,7 +8,7 @@ class PlaySong
 
   def self.perform(song_id)
     song = get_song_detail song_id
-		%x{say "This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. Enjoy!"}
+		%x{say -v #{RANDOM_ACCENTS[rand(0..3)]}" This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. #{song.message}"}
     actually_play_song song
   end
 
