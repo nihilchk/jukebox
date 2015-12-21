@@ -9,6 +9,7 @@ Its really simple to setup. All you need is redis server and few dependencies li
   - youtube-dl
   - ffmpeg
   - afplay/mpg123
+  - gnustep-gui-runtime (say command for ubuntu)
   - redis
   - samba(for sharing downloaded files in case you want to run multiple remote players)
 

@@ -8,7 +8,7 @@ class PlaySong
 
   def self.perform(song_id)
     song = get_song_detail song_id
-		%x{say -v #{RANDOM_ACCENTS[rand(0..3)]} 'This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. #{song.message}'}
+		%x{#{say_command} 'This dedication has been made by #{song.requestor} towards #{song.dedicated_to}. #{song.message}'}
     actually_play_song song
   end
 
@@ -23,6 +23,11 @@ class PlaySong
   def self.player_command
     is_darwin = (/darwin/ =~ RUBY_PLATFORM) != nil
     is_darwin ? "afplay" : "mpg123"
+  end
+
+  def self.say_command
+    is_darwin = (/darwin/ =~ RUBY_PLATFORM) != nil
+    is_darwin ? "say -v #{RANDOM_ACCENTS[rand(0..3)]}" : "say"
   end
 end
 
