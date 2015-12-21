@@ -22,4 +22,13 @@ class SongRequest < ActiveRecord::Base
     self.save!
     FileDownloader.enqueue_download(song_url, self)
   end
+
+  def enqueue!
+    @song_request.status = 'Will be played'
+    @song_request.save!
+    Resque.enqueue(PlaySong, @song_request.id)
+    Jukebox::Application.config.master_server_config['other_players'].each do | player_name |
+      Resque.enqueue_to(player_name, PlaySongPlayer, @song_request.id)
+    end if Jukebox::Application.config.master_server_config['other_players'].present?
+  end
 end

@@ -8,6 +8,9 @@ class FileDownloader
         %x{mkdir -p songs && youtube-dl -o songs/#{song_request.file_id}.%\\(ext\\)s -x --audio-format mp3 #{song_url}}
         if File.exist? "songs/#{song_request.file_id}.mp3"
           song_request.status = 'Downloaded'
+          if ENV['autopilot']
+            song_request.enqueue!
+          end
         else
           song_request.status = 'Error'
         end
