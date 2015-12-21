@@ -9,13 +9,14 @@ Its really simple to setup. All you need is redis server and few dependencies li
   - youtube-dl
   - ffmpeg
   - afplay/mpg123
-  - gnustep-gui-runtime (say command for ubuntu)
+  - espeak (speech command for ubuntu)
   - redis
   - samba(for sharing downloaded files in case you want to run multiple remote players)
 
 * Configuration
   - edit the server-config.yml as per your setup (mostly the production section)
   - add a secret key for admins on <servername> server as JUKEBOX_ADMIN_SECRET=mysupersecurepassword
+  - add autopilot=true if you need to autoenqueue songs, else you will have to enqueue them manually using http://jukebox:3000/songs_requests?mysupersecurepassword=true
   - servernames can be ip addresses also, servername must have a accessible redis server running on port 6379
 
 * Database creation

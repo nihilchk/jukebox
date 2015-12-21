@@ -27,7 +27,7 @@ class PlaySong
 
   def self.say_command
     is_darwin = (/darwin/ =~ RUBY_PLATFORM) != nil
-    is_darwin ? "say -v #{RANDOM_ACCENTS[rand(0..3)]}" : "say"
+    is_darwin ? "say -v #{RANDOM_ACCENTS[rand(0..3)]}" : "espeak"
   end
 end
 
