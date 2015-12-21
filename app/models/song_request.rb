@@ -24,8 +24,8 @@ class SongRequest < ActiveRecord::Base
   end
 
   def enqueue!
-    selfstatus = 'Will be played'
-    selfsave!
+    self.status = 'Will be played'
+    self.save!
     Resque.enqueue(PlaySong, self.id)
     Jukebox::Application.config.master_server_config['other_players'].each do | player_name |
       Resque.enqueue_to(player_name, PlaySongPlayer, self.id)
