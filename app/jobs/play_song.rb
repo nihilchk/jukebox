@@ -15,7 +15,7 @@ class PlaySong
   def self.actually_play_song song
     song.status = "Playing"
     song.save!
-    %x{#{player_command} songs/#{song.file_id}}
+    %x{#{player_command} songs/#{song.file_id}.m4a}
     song.status = "Played"
     song.save!
   end
@@ -39,6 +39,6 @@ class PlaySongPlayer < PlaySong
   end
 
   def self.actually_play_song song
-    %x{#{player_command} songs/#{song.file_id}}
+    %x{#{player_command} songs/#{song.file_id}.m4a}
   end
 end
