@@ -15,5 +15,5 @@
 /log/*
 !/log/.keep
 /tmp
-songs/*.mp3
+songs/*
 .idea*

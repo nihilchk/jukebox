@@ -15,14 +15,14 @@ class PlaySong
   def self.actually_play_song song
     song.status = "Playing"
     song.save!
-    %x{#{player_command} songs/#{song.file_id}.mp3}
+    %x{#{player_command} songs/#{song.file_id}}
     song.status = "Played"
     song.save!
   end
 
   def self.player_command
     is_darwin = (/darwin/ =~ RUBY_PLATFORM) != nil
-    is_darwin ? "afplay" : "mpg123"
+    is_darwin ? "afplay" : "mplayer"
   end
 
   def self.say_command
@@ -39,6 +39,6 @@ class PlaySongPlayer < PlaySong
   end
 
   def self.actually_play_song song
-    %x{#{player_command} songs/#{song.file_id}.mp3}
+    %x{#{player_command} songs/#{song.file_id}}
   end
 end
