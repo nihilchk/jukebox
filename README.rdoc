@@ -1,3 +1,6 @@
+= HEAD OVER TO http://github.com/rohitggarg/jukebox.git
+
+= Old Technique
 == README
 
 A basic jukebox application which uses resque for distributing songs across places. We required one in our office setup that's why this repository came into existence.
